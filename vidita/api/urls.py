@@ -10,10 +10,7 @@ from django.urls import re_path
 from django.views.static import serve
 
 
-# router = routers.SimpleRouter()
-# router.register(r'posts_model', Post_Fabrique_Api)
-# router.register(r'bookmarks_model', Bookmark_Fabrique_Api)
-# router.register(r'reactions_model', Link_Fabrique_Api)
+router = routers.SimpleRouter()
 
 
 urlpatterns = [
@@ -21,4 +18,4 @@ urlpatterns = [
     path('picture_any_user/', Pictures_Anonymous_Api.as_view(),
       name='pictures-anonymous'),
 ]
-# urlpatterns += router.urls
+urlpatterns += router.urls
