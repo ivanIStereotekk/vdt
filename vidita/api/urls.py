@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from .views import index_view,Pictures_Anonymous_Api,Pictures_Create_Api,Pictures_List_Create_Api,Pictures_Delete_View
+from .views import index_view,Pictures_Anonymous_Api,Pictures_Create_Api,Pictures_List_Create_Api,Pictures_Delete_View,Pictures_Filter_View
 
 from rest_framework import routers
 
@@ -23,5 +23,7 @@ urlpatterns = [
     name='pictures-list-create'),
     path('picture_delete/', Pictures_Delete_View.as_view(),
     name='pictures-delete'),
+    path('picture_filter/', Pictures_Filter_View.as_view(),
+    name='pictures-filter'),
 ]
 urlpatterns += router.urls

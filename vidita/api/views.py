@@ -10,9 +10,10 @@ from django.shortcuts import render
 from dotenv import dotenv_values
 import os
 from pathlib import Path
+import django_filters.rest_framework
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.renderers import JSONRenderer,BrowsableAPIRenderer
 
-
-# M O D E L S
 
 
 def index_view(request):
@@ -44,3 +45,13 @@ class Pictures_Delete_View(generics.DestroyAPIView):
     queryset = Picture_Model.objects.all()
     serializer_class = Picture_Serializer
     lookup_fields = ['-data', 'tagged_people']
+
+
+
+class Pictures_Filter_View(generics.ListAPIView):
+    renderer_classes = [JSONRenderer]
+    queryset = Picture_Model.objects.all()
+    serializer_class = Picture_Serializer
+    filter_backends = [DjangoFilterBackend]
+    #filter_backends =[BrowsableAPIRenderer]
+    filter_fields = ['description','location']
