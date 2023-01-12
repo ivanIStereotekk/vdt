@@ -13,12 +13,13 @@ from pathlib import Path
 import django_filters.rest_framework
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.renderers import JSONRenderer,BrowsableAPIRenderer
+from rest_framework.filters import SearchFilter
 
 
 
 def index_view(request):
     """ Test index response view"""
-    return HttpResponse(f"hello world{os.getpgid}")
+    return HttpResponse(f"hello world")
 
 
 @permission_classes((AllowAny,))
@@ -47,11 +48,10 @@ class Pictures_Delete_View(generics.DestroyAPIView):
     lookup_fields = ['-data', 'tagged_people']
 
 
-
 class Pictures_Filter_View(generics.ListAPIView):
     renderer_classes = [JSONRenderer]
     queryset = Picture_Model.objects.all()
     serializer_class = Picture_Serializer
-    filter_backends = [DjangoFilterBackend]
-    #filter_backends =[BrowsableAPIRenderer]
+    filter_backends = [DjangoFilterBackend,SearchFilter]
     filter_fields = ['description','location']
+    search_fields = ['description','location']
