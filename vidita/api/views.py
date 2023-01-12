@@ -17,7 +17,7 @@ from pathlib import Path
 
 def index_view(request):
     """ Test index response view"""
-    return HttpResponse(f"--=====----")
+    return HttpResponse(f"hello world{os.getpgid}")
 
 
 @permission_classes((AllowAny,))
@@ -28,3 +28,19 @@ class Pictures_Anonymous_Api(generics.ListAPIView):
 
 
 
+@permission_classes((IsAuthenticated,))
+class Pictures_Create_Api(generics.CreateAPIView):
+    queryset = Picture_Model.objects.all()
+    serializer_class = Picture_Serializer
+    ordering_fields = '-data'
+
+@permission_classes((IsAuthenticated,))
+class Pictures_List_Create_Api(generics.ListCreateAPIView):
+    queryset = Picture_Model.objects.all()
+    serializer_class = Picture_Serializer
+    ordering_fields = '-data'
+
+class Pictures_Delete_View(generics.DestroyAPIView):
+    queryset = Picture_Model.objects.all()
+    serializer_class = Picture_Serializer
+    lookup_fields = ['-data', 'tagged_people']
